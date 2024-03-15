@@ -1,7 +1,6 @@
-package guru.springframework.spring6webapp.domain;
+package guru.springframework.spring5webapp.domain;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
