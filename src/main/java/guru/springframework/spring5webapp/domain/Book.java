@@ -11,10 +11,10 @@ public class Book {
     private Long id;
     private String title;
     private String isbn;
-    private Set<Author> authors;
     @ManyToMany
     @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
+    private Set<Author> authors;
     public Set<Author> getAuthors() {
         return authors;
     }
