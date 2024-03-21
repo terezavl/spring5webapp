@@ -20,6 +20,8 @@ public class Book {
         return authors;
     }
 
+    @ManyToOne()
+    Publisher publisher;
     public void setAuthors(Set<Author> authors) {
         this.authors = authors;
     }
@@ -48,13 +50,22 @@ public class Book {
         this.isbn = isbn;
     }
 
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", isbn='" + isbn + '\'' +
-                ", authors=" + authors +
+                ", authors=" + authors + '\'' +
+                ", publisher =" + publisher +
                 '}';
     }
 

@@ -2,8 +2,10 @@ package guru.springframework.spring5webapp.bootstrap;
 
 import guru.springframework.spring5webapp.domain.Author;
 import guru.springframework.spring5webapp.domain.Book;
+import guru.springframework.spring5webapp.domain.Publisher;
 import guru.springframework.spring5webapp.repositories.AuthorRepository;
 import guru.springframework.spring5webapp.repositories.BookRepository;
+import guru.springframework.spring5webapp.repositories.PublisherRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -11,10 +13,13 @@ import org.springframework.stereotype.Component;
 public class BootstrapData  implements CommandLineRunner {
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
+    private final PublisherRepository publisherRepository;
 
-    public BootstrapData(AuthorRepository authorRepository, BookRepository bookRepository) {
+    public BootstrapData(AuthorRepository authorRepository, BookRepository bookRepository,
+                         PublisherRepository publisherRepository) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
+        this.publisherRepository = publisherRepository;
     }
 
     @Override
@@ -43,12 +48,32 @@ public class BootstrapData  implements CommandLineRunner {
 
         ericSaved.getBooks().add(dddSaved);
         rodSaved.getBooks().add(noEJBSaved);
+        dddSaved.getAuthors().add(ericSaved);
+        noEJBSaved.getAuthors().add(rodSaved);
 
         authorRepository.save(ericSaved);
         authorRepository.save(rodSaved);
+        bookRepository.save(dddSaved);
+        bookRepository.save(noEJBSaved);
 
         System.out.println("In Bootstrap");
         System.out.println("Author count: " + authorRepository.count());
         System.out.println("Book count: " + bookRepository.count());
+
+        Publisher publisher = new Publisher();
+        publisher.setPublisherName("John Smith");
+        publisher.setAddress("US");
+        publisher.setCity("Jacksonville");
+        publisher.setState("Florida");
+        publisher.setZipCode("123ABC");
+
+        Publisher publisherSaved = publisherRepository.save(publisher);
+
+        noEJBSaved.setPublisher(publisherSaved);
+        dddSaved.setPublisher(publisherSaved);
+        publisherSaved.getBooks().add((noEJBSaved));
+        publisherSaved.getBooks().add((dddSaved));
+
+        System.out.println("Publisher count: " + publisherRepository.count());
     }
 }

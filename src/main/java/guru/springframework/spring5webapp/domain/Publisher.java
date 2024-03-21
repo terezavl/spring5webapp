@@ -1,22 +1,22 @@
 package guru.springframework.spring5webapp.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Publisher {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
-    String publisherName;
-    String address;
-    String city;
-    String state;
-    String zipCode;
-
+    private Long id;
+    private String publisherName;
+    private String address;
+    private String city;
+    private String state;
+    private String zipCode;
+    @OneToMany(mappedBy = "publisher")
+    private Set<Book> books = new HashSet<>();
     public Long getId() {
         return id;
     }
@@ -63,6 +63,14 @@ public class Publisher {
 
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
+    }
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
     }
 
     @Override
